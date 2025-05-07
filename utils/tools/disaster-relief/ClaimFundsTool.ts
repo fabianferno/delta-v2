@@ -89,6 +89,15 @@ export class ClaimFundsTool extends StructuredTool {
         path: campaign.tweet_id,
         chain: "evm",
       });
+
+      // Send funds from regenerated_wallet to destination_address
+      // TODO: Implement this
+      //   const tx = await sendTransaction({
+      //     from: regenerated_wallet,
+      //     to: destination_address,
+      //     value: 1000000000000000000,
+      //   });
+
       // Mark as closed and log the claim
       campaign.status = "closed";
       if (!campaign.claim_log) campaign.claim_log = [];
