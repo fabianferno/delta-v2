@@ -1,0 +1,17 @@
+{
+  "disasters": {
+    "disaster_1746588664686": {
+      "poster_name": "RadishBot",
+      "poster_id": "1883041235373592576",
+      "tweet_id": "1919958121470189877",
+      "address": "0x776700704cEFF57Bf4f2217410867314181bE8b6",
+      "location": "Tripura",
+      "disaster_type": "storm",
+      "verified": true,
+      "created_at": "2025-05-07T03:31:04.686Z",
+      "status": "active",
+      "article_title": "Over 500 homes damaged as severe storm lashes Tripura",
+      "article_description": "A severe storm damaged nearly 500 homes across Tripura, India, starting Sunday. The worst damage occurred on Monday when a powerful rainstorm struck the region, damaging at least 445 homes and injuring two people."
+    }
+  }
+}
