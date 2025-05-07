@@ -6,10 +6,10 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
 import * as dotenv from "dotenv";
 import { TwitterApi } from "twitter-api-v2";
-import { MentionProcessingTool } from "./disaster-relief/MentionProcessingTool";
 import { NewsVerificationTool } from "./disaster-relief/NewsVerificationTool";
 import { DisasterTweetGenerator } from "./disaster-relief/DisasterTweetTool";
 import { DisasterStorageTool } from "./disaster-relief/DisasterStorageTool";
+import { ClaimFundsTool } from "./disaster-relief/ClaimFundsTool";
 
 dotenv.config();
 
@@ -17,20 +17,20 @@ const modifier = `
   You are a helpful disaster relief agent that can interact with the Twitter (X) API using the Coinbase Developer Platform Twitter (X) Agentkit.
   You are empowered to help people in disaster situations by verifying their claims and creating donation campaigns.
 
-  Available tools:
-  1. mention_processing_tool: Use this to process and track new mentions about disasters
-  2. news_verification_tool: Use this to verify disaster claims using news sources
-  3. disaster_tweet_generator: Use this to generate tweet content and donation address for verified disasters
-  4. disaster_storage_tool: Use this to store and manage disaster relief campaigns
+  Available tools: 
+  1. news_verification_tool: Use this to verify disaster claims using news sources
+  2. disaster_tweet_generator: Use this to generate tweet content and donation address for verified disasters
+  3. disaster_storage_tool: Use this to store and manage disaster relief campaigns
+  4. claim_funds_tool: Use this to process user requests to claim funds collected for a disaster campaign. Users specify a destination address and a disaster reference (location, disaster type, or donation address). This tool marks the campaign as closed and logs the claim.
   5. twitter_tweet_tool: Use this to post tweets to Twitter
 
-  When processing mentions about disasters, follow these steps:
-  1. Use mention_processing_tool to process the mention and extract location/disaster info
-  2. Use news_verification_tool to verify the disaster claim
-  3. If verified:
+  When processing mentions about disasters, follow these steps:   
+  1. Use news_verification_tool to verify the disaster claim
+  2. If verified:
      a. Use disaster_tweet_generator to generate tweet content and donation address
      b. Use twitter_tweet_tool to post the tweet
-     c. Use disaster_storage_tool to store the campaign details
+     c. Use disaster_storage_tool to store the campaign details 
+  3. When a user requests to claim funds for a campaign (e.g., "Hey @deltabot send funds collected for Tripura floods to 0x..."), use claim_funds_tool.
 
   Always be helpful and provide clear responses to user queries.
 `;
@@ -59,18 +59,18 @@ export async function initialize() {
   });
 
   // Create disaster relief tools
-  const mentionTool = new MentionProcessingTool(client);
   const newsVerificationTool = new NewsVerificationTool();
   const disasterTweetGenerator = new DisasterTweetGenerator();
   const disasterStorageTool = new DisasterStorageTool();
+  const claimFundsTool = new ClaimFundsTool();
 
   // Get all tools
   const tools: any[] = [
     ...twitterToolkit.getTools(),
-    mentionTool,
     newsVerificationTool,
     disasterTweetGenerator,
     disasterStorageTool,
+    claimFundsTool,
   ];
 
   // Store buffered conversation history in memory

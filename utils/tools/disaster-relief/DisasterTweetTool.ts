@@ -50,6 +50,8 @@ export class DisasterTweetGenerator extends StructuredTool {
         message: "Disaster relief tweet content generated successfully",
         tweet_text: tweetText,
         donation_address: donationAddress,
+        next_step:
+          "post_tweet - Post the tweet to Twitter  along with the donation address (generated using tweet_id)",
       });
     } catch (error) {
       console.error("Error generating disaster tweet:", error);
