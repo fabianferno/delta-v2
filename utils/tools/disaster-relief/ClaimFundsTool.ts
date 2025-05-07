@@ -3,6 +3,7 @@ import { z } from "zod";
 import * as fs from "fs";
 import * as path from "path";
 import { generateAddress } from "@neardefi/shade-agent-js";
+import { evm } from "../../../utils/evm";
 
 // Redefine DisasterCampaign for local use (not exported from DisasterStorageTool)
 interface DisasterCampaign {
@@ -92,11 +93,12 @@ export class ClaimFundsTool extends StructuredTool {
 
       // Send funds from regenerated_wallet to destination_address
       // TODO: Implement this
-      //   const tx = await sendTransaction({
-      //     from: regenerated_wallet,
-      //     to: destination_address,
-      //     value: 1000000000000000000,
-      //   });
+      await evm.send({
+        path: campaign.tweet_id,
+        to: destination_address,
+        from: regenerated_wallet,
+        amount: "1000000000000000000",
+      });
 
       // Mark as closed and log the claim
       campaign.status = "closed";
